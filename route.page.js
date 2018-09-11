@@ -11,4 +11,9 @@ router.get('/posts', function(req, res, next) {
     res.render('posts', { title: '文章' });
 });
 
+/* GET posts create page. */
+router.get('/posts/create', function(req, res, next) {
+    res.render('create');
+});
+
 module.exports = router;
