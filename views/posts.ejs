@@ -10,10 +10,9 @@
     <div id="app">
       <h1><%= title %></h1>
       <p>Welcome to <%= title %></p>  
-      
-      <ul>
-        <li v-for="item in postsList">{{ item.title }}</li>
-      </ul>
+      <div v-for="item in postsList">
+        <a v-bind:href="item.url">{{ item.title }}</a>
+      </div>
     </div>
   </body>
 </html>
@@ -27,8 +26,8 @@
       fetchData () {
         axios.get('/api/posts')
           .then(function(response) {
-            // console.log(response);
             vm.postsList = response.data.postsList;
+            vm.postsList.forEach((item) => item.url = '/posts/show?id=' + item._id);
           })
       }
     }
