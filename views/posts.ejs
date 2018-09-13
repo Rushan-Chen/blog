@@ -18,6 +18,7 @@
         <a v-bind:href="item.url">{{ item.title }}</a>
       </li>
     </ul>
+  </div>
 </div>
 <script>
   var vm = new Vue({
@@ -30,7 +31,7 @@
         axios.get('/api/posts')
           .then(function(response) {
             vm.postsList = response.data.postsList;
-            vm.postsList.forEach((item) => item.url = '/posts/show?id=' + item._id);
+            vm.postsList.forEach((element) => element.url = '/posts/show?id=' + element._id);
           })
       }
     }
