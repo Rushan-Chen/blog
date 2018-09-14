@@ -4,36 +4,35 @@ var PostModel = require('./models/post');
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
-    res.send('yangyang, huahua, lili');
+    res.send('response with a resource');
 });
 
 /* GET posts List. */
 router.get('/posts', function(req, res, next) {
     PostModel.find ({}, {}, function (err, posts){
         if (err) {
-            res.json({ success: false });
+            next(err);
         } else {
-            res.json({ success: true, postsList: posts });
+            res.json({ postsList: posts });
         }
     });
 });
 
 /* GET one post. */
-// 例如，GET /api/posts/one?id=5b98a81f72cefb49d18b8b24
-router.get('/posts/one', function(req, res, next) {
-    var id = req.query.id;
+router.get('/posts/:id', function(req, res, next) {
+    var id = req.params.id;
 
     PostModel.findOne ({_id: id}, function (err, post){
         if (err) {
-            res.json({ success: false });
+            next(err);
         } else {
-            res.json({ success: true, post });
+            res.json({ post });
         }
     });
 });
 
 /* POST create post. */
-router.post('/posts/create', function(req, res, next) {
+router.post('/posts', function(req, res, next) {
     var title = req.body.title;
     var content = req.body.content;
     
@@ -42,29 +41,30 @@ router.post('/posts/create', function(req, res, next) {
     post.content = content;
     post.save(function (err, post) {
         if(err) {
-            res.json({success: false});
+            next(err);
         } else {
-            res.json({success: true});
+            res.json({ post }); // 创建后返回数据给客户端，客户端拿到id可以做一些交互
         }
     });
 });
 
 /* PATCH edit post. */
-// POST /api/posts/edit （不带id）
-router.post('/posts/edit', function(req, res, next) {
-    var id = req.body.id;
+router.patch('/posts/:id', function(req, res, next) {
+    var id = req.params.id;
     var title = req.body.title;
     var content = req.body.content;
 
-    // console.log(req.query.id); //undefined
-    // 之前写成req.query.id，结果编辑后post成功但是没有更新内容。
-    // 注意id在不同情况下载哪个属性里。
+    // console.log(req.params); // { id: '5b9a4394005b77a1b6d44b39' }
+    // console.log(req.query); // {}
+    // 路径 /x/y/ => `req.parama`
+    // 参数 ?id=123 => `req.query`
+    // body => `req.body`
 
     PostModel.findOneAndUpdate({ _id: id }, { title, content }, function(err) {
         if (err) {
-          res.json({ success: false });
+            next(err);
         } else {
-          res.json({ success: true });
+            res.json({}); // 不需要返回文章数据
         }
     });
 });

@@ -21,12 +21,16 @@
     },
     methods: {
       submit () {
-        axios.post('/api/posts/create', {
+        axios.post('/api/v1/posts/', {
             title: vm.title,
             content: vm.content,
         })
         .then(function (response) {
-            alert(JSON.stringify(response.data));
+            return response.data;
+        })
+        .then(function (data) {
+            // 拿到返回的数据后，取出id，将页面跳转到文章详情。
+            window.location = '/posts/show?id=' + data.post._id;
         })
         .catch(function (err) {
             alert(err);
