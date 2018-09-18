@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var PostModel = require('./models/post');
+var UserModel = require('./models/user');
+var bcrypt = require('bcrypt');
+var config = require('./config');
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
@@ -22,7 +25,7 @@ router.get('/posts', function(req, res, next) {
 router.get('/posts/:id', function(req, res, next) {
     var id = req.params.id;
 
-    PostModel.findOne ({_id: id}, function (err, post){
+    PostModel.findById ( id, function (err, post){
         if (err) {
             next(err);
         } else {
@@ -66,6 +69,57 @@ router.patch('/posts/:id', function(req, res, next) {
         } else {
             res.json({}); // 不需要返回文章数据
         }
+    });
+});
+
+/* POST signup user. */
+router.post('/signup', function(req, res, next) {
+    var name = req.body.name;
+    var pass = req.body.pass;
+    var rePass = req.body.rePass;
+    
+    //要先对传入的两次密码进行对比
+    if (pass !== rePass) {
+        return next(new Error('两次密码不一致'));
+    }
+
+    var user = new UserModel();
+    user.name = name;
+    user.pass = bcrypt.hashSync(pass, 10);
+    user.save(function (err) {
+        if(err) {
+            next(err);
+        } else {
+            res.end(); // 结束响应，不返回data(response.data)
+        }
+    });
+});
+
+/* POST signin user. */
+router.post('/signin', function(req, res, next) {
+    var name = req.body.name || '';
+    var pass = req.body.pass || '';
+    // TODO: 如果不设置''为默认值，会怎么样？
+    UserModel.findOne ({ name }, function (err, user){
+        if (err ) {// TODO: 如果不加!user?
+            next(new Error('用户名不存在'));
+        } else {
+            var isOk = bcrypt.compareSync(pass, user.pass);
+            if (!isOk) {
+                return next(new Error('密码不正确'));
+            }
+        }
+
+        var authToken = user._id;
+        var opts = {
+            path: '/',
+            maxAge: 1000 * 60 * 60 * 24 * 30, //【重要】cookie有效期30天。单位是毫秒。
+            signed: true, // 签名
+            httpOnly: true // 将 cookie 标记为只能由 web 服务器访问。
+        };
+
+        res.cookie(config.cookieName, authToken, opts);
+        res.end();
     });
 });
 

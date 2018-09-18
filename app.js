@@ -5,7 +5,8 @@ var expressLayouts = require('express-ejs-layouts');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var config = require('./config');
+var auth = require('./middlewares/auth');
 
 var pageRouter = require('./route.page');
 var apiRouter = require('./route.api');
@@ -20,8 +21,10 @@ app.use(expressLayouts);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.cookieName));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(auth.authUser);
 
 // 截流，更新版本时
 // app.use('/', function(req, res, next){
