@@ -1,5 +1,5 @@
 <div class="col-md-8 col-md-offset-2">
-  <h1>新建文章</h1>
+    <h1>新建文章</h1>
     <form>
         <div class="form-group">
             <input type="text" class="form-control" v-model="title" placeholder="请输入文章标题">
@@ -13,29 +13,29 @@
     </form>
 </div>
 <script>
-  var vm = new Vue({
-    el:'#app',
-    data:{
-      title: '',
-      content: ''
-    },
-    methods: {
-      submit () {
-        axios.post('/api/v1/posts/', {
-            title: vm.title,
-            content: vm.content,
-        })
-        .then(function (response) {
-            return response.data;
-        })
-        .then(function (data) {
-            // 拿到返回的数据后，取出id，将页面跳转到文章详情。
-            window.location = '/posts/show?id=' + data.post._id;
-        })
-        .catch(function (err) {
-            alert(err);
-        })
-      }
-    }
-  });
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            title: '',
+            content: ''
+        },
+        methods: {
+            submit() {
+                axios.post('/api/v1/posts',
+                    {
+                        title: vm.title,
+                        content: vm.content
+                    })
+                    .then(function (response) {
+                        return response.data;
+                    })
+                    .then(function (data) {
+                        window.location = '/posts/show?id=' + data.post._id;
+                    })
+                    .catch(function (err) {
+                        alert(err.response.data.error);
+                    })
+            }
+        }
+    });
 </script>

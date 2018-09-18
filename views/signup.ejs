@@ -33,10 +33,10 @@ var vm= new Vue ({
                 return response.data;
             })
             .then(function(data){
-                window.location = '/'; // 注册成功，回到首页
+                window.location = '/signin'; // 注册成功，回到首页
             })
             .catch(function(err){
-                alert(err);
+                alert(err.response.data.error);
             })
         }
     }

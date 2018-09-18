@@ -43,11 +43,11 @@ router.post('/posts', function(req, res, next) {
     post.title = title;
     post.content = content;
     post.authorId = res.locals.currentUser._id;
-    post.save(function (err, post) {
+    post.save(function (err, doc) {
         if(err) {
             next(err);
         } else {
-            res.json({ post }); // 创建后返回数据给客户端，客户端拿到id可以做一些交互
+            res.json({ post: doc }); // 创建后返回数据给客户端，客户端拿到id可以做一些交互
         }
     });
 });
@@ -79,6 +79,14 @@ router.post('/signup', function(req, res, next) {
     var pass = req.body.pass;
     var rePass = req.body.rePass;
     
+    if (!name) {
+        return next(new Error('账号不能为空'));
+    }
+
+    if (!pass || !rePass) {
+        return next(new Error('密码不能为空'));
+    }
+
     //要先对传入的两次密码进行对比
     if (pass !== rePass) {
         return next(new Error('两次密码不一致'));
@@ -98,8 +106,8 @@ router.post('/signup', function(req, res, next) {
 
 /* POST signin user. */
 router.post('/signin', function(req, res, next) {
-    var name = req.body.name || '';
-    var pass = req.body.pass || '';
+    var name = req.body.name;
+    var pass = req.body.pass;
     // TODO: 如果不设置''为默认值，会怎么样？
     UserModel.findOne ({ name }, function (err, user){
         if (err || !user) {// TODO: 如果不加!user?

@@ -24,16 +24,14 @@ var vm = new Vue ({
                 pass: vm.pass
             })
             .then(function(response){
-                console.log('----');
-                console.log(response.data); // TODO:后端res.end(),前端会收到啥？
-                console.log('----');
+                // alert(response.data === ''); => true
                 return response.data;
             })
             .then(function(data){
                 window.location = '/';
             })
             .catch(function(err){
-                alert(err);
+                alert(err.response.data.error);
             })
         }
     }
