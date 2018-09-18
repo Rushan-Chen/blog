@@ -42,6 +42,7 @@ router.post('/posts', function(req, res, next) {
     var post = new PostModel();
     post.title = title;
     post.content = content;
+    post.authorId = res.locals.currentUser._id;
     post.save(function (err, post) {
         if(err) {
             next(err);
@@ -101,7 +102,7 @@ router.post('/signin', function(req, res, next) {
     var pass = req.body.pass || '';
     // TODO: 如果不设置''为默认值，会怎么样？
     UserModel.findOne ({ name }, function (err, user){
-        if (err ) {// TODO: 如果不加!user?
+        if (err || !user) {// TODO: 如果不加!user?
             next(new Error('用户名不存在'));
         } else {
             var isOk = bcrypt.compareSync(pass, user.pass);
