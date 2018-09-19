@@ -1,4 +1,4 @@
-var marked = require('marked');
+import marked from 'marked';
 
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -18,6 +18,6 @@ marked.setOptions({
     }
   });
   
-  module.exports = function (text) {
+ export default function (text) {
     return marked(text || '');
   };

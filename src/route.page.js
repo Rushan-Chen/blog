@@ -1,8 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var PostModel = require('./models/post');
-var marked = require('./common/marked');
-var auth = require('./middlewares/auth');
+import express from 'express';
+import PostModel from './models/post';
+import marked from './common/marked';
+import * as auth from './middlewares/auth';
+
+const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

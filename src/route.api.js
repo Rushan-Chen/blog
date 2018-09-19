@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var PostModel = require('./models/post');
-var UserModel = require('./models/user');
-var bcrypt = require('bcrypt');
-var config = require('./config');
+import express from 'express' ;
+import PostModel from './models/post' ;
+import UserModel from './models/user' ;
+import bcrypt from 'bcrypt' ;
+import config from './config' ;
+
+const router = express.Router();
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
@@ -12,7 +13,7 @@ router.get('/users', function(req, res, next) {
 
 /* GET posts List. */
 router.get('/posts', function(req, res, next) {
-    PostModel.find ({}, {}, function (err, posts){
+    PostModel.find ({}, function (err, posts){
         if (err) {
             next(err);
         } else {
@@ -23,7 +24,7 @@ router.get('/posts', function(req, res, next) {
 
 /* GET one post. */
 router.get('/posts/:id', function(req, res, next) {
-    var id = req.params.id;
+    const id = req.params.id;
 
     PostModel.findById ( id, function (err, post){
         if (err) {
@@ -36,10 +37,9 @@ router.get('/posts/:id', function(req, res, next) {
 
 /* POST create post. */
 router.post('/posts', function(req, res, next) {
-    var title = req.body.title;
-    var content = req.body.content;
+    const { title, content } = req.body;
     
-    var post = new PostModel();
+    const post = new PostModel();
     post.title = title;
     post.content = content;
     post.authorId = res.locals.currentUser._id;
@@ -55,12 +55,9 @@ router.post('/posts', function(req, res, next) {
 
 /* PATCH edit post. */
 router.patch('/posts/:id', function(req, res, next) {
-    var id = req.params.id;
-    var title = req.body.title;
-    var content = req.body.content;
+    const id = req.params.id;
+    const { title, content } = req.body;
 
-    // console.log(req.params); // { id: '5b9a4394005b77a1b6d44b39' }
-    // console.log(req.query); // {}
     // 路径 /x/y/ => `req.parama`
     // 参数 ?id=123 => `req.query`
     // body => `req.body`
