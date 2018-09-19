@@ -47,4 +47,4 @@ function adminRequired (req, res, next) {
     next();
 }
 
-module.exports = { authUser };
+module.exports = { authUser, adminRequired };
