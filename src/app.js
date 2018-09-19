@@ -27,17 +27,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(config.cookieName));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(
-  session({
-    secret: config.sessionSecret,
-    store: new MongoStore({
-      url: config.mongodbUrl
-    }),
-    resave: true,
-    saveUninitialized: true
-  })
-);
-
 app.use(auth.authUser);
 
 // 截流，更新版本时

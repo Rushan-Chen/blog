@@ -22,7 +22,7 @@ router.get('/posts/create', auth.adminRequired, function(req, res, next) {
 
 /* GET posts show page. */
 router.get('/posts/show', function(req, res, next) {
-    var id = req.query.id;
+    const id = req.query.id;
 
     PostModel.findOne({_id : id}, function (err, post) {
         post.mkContent = marked(post.content);
@@ -32,7 +32,7 @@ router.get('/posts/show', function(req, res, next) {
 
 /* GET posts edit page. */
 router.get('/posts/edit', function(req, res, next) {
-    var id = req.query.id;
+    const id = req.query.id;
     res.render('edit', { id });
 });
 
@@ -46,4 +46,4 @@ router.get('/signin', function(req, res, next) {
     res.render('signin');
 });
 
-module.exports = router;
+export default router;

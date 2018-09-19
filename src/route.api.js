@@ -3,6 +3,8 @@ import PostModel from './models/post' ;
 import UserModel from './models/user' ;
 import bcrypt from 'bcrypt' ;
 import config from './config' ;
+import jwt from 'jwt-simple';
+import moment from 'moment';
 
 const router = express.Router();
 
@@ -73,9 +75,7 @@ router.patch('/posts/:id', function(req, res, next) {
 
 /* POST signup user. */
 router.post('/signup', function(req, res, next) {
-    var name = req.body.name;
-    var pass = req.body.pass;
-    var rePass = req.body.rePass;
+    const { name, pass, rePass } = req.body;
     
     if (!name) {
         return next(new Error('账号不能为空'));
@@ -90,7 +90,7 @@ router.post('/signup', function(req, res, next) {
         return next(new Error('两次密码不一致'));
     }
 
-    var user = new UserModel();
+    const user = new UserModel();
     user.name = name;
     user.pass = bcrypt.hashSync(pass, 10);
     user.save(function (err) {
@@ -104,30 +104,38 @@ router.post('/signup', function(req, res, next) {
 
 /* POST signin user. */
 router.post('/signin', function(req, res, next) {
-    var name = req.body.name;
-    var pass = req.body.pass;
-    // TODO: 如果不设置''为默认值，会怎么样？
+    const { name, pass } = req.body;
+    
     UserModel.findOne ({ name }, function (err, user){
-        if (err || !user) {// TODO: 如果不加!user?
-            next(new Error('用户名不存在'));
+        if (err || !user) {
+            return next(new Error('找不到用户'));
         } else {
-            var isOk = bcrypt.compareSync(pass, user.pass);
+            const isOk = bcrypt.compareSync(pass, user.pass);
             if (!isOk) {
                 return next(new Error('密码不正确'));
             }
         }
 
-        var authToken = user._id;
-        var opts = {
+        const token = jwt.encode(
+            {
+                _id: user._id,
+                name: user.name,
+                isAdmin: user.name === config.admin ? true : false,
+                exp: moment().add( 30, 'days' ).valueOf() 
+            },
+            config.jwtSecret
+        );
+        const opts = {
             path: '/',
-            maxAge: 1000 * 60 * 60 * 24 * 30, //【重要】cookie有效期30天。单位是毫秒。
+            maxAge: moment().add( 30, 'days' ).valueOf(), //【重要】cookie有效期30天。单位是毫秒。
             signed: true, // 签名
             httpOnly: true // 将 cookie 标记为只能由 web 服务器访问。
         };
 
-        res.cookie(config.cookieName, authToken, opts);
-        res.end();
+        // 将token保存在cookie里。
+        res.cookie(config.cookieName, token, opts);
+        res.json({ token });
     });
 });
 
-module.exports = router;
+export default router;
