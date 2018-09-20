@@ -1,7 +1,7 @@
-import PostModel from './models/post' ;
+import PostModel from '../models/post' ;
 
 export const more = function(req, res, next) {
-    PostModel.find ({}, function (err, posts){
+    PostModel.find ({}, {}, function (err, posts){
         if (err) {
             next(err);
         } else {

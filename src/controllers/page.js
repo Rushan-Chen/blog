@@ -1,5 +1,5 @@
-import PostModel from './models/post';
-import marked from './common/marked';
+import PostModel from '../models/post';
+import marked from '../common/marked';
 
 export const homePage = function(req, res, next) {
     res.render('index', { title: '无影有记' });
