@@ -26,7 +26,10 @@ router.post('/signup', user.signup);
 /* POST signin user. */
 router.post('/signin', user.signin);
 
-/* GET active account */
+/* GET active user account */
 router.get('/activeAccount', user.activeAccount);
+
+/* POST signout user*/
+router.post('/signout', user.signout);
 
 export default router;

@@ -49,7 +49,7 @@ export const adminRequired = (req, res, next) => {
     }
 
     if (!req.user.isAdmin) {
-        let err= newError ('需要管理员权限');
+        let err= new Error ('需要管理员权限');
         err.status = 403;
         next(err);
         return;

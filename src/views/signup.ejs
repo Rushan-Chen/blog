@@ -37,10 +37,6 @@ var vm= new Vue ({
             .then(function(response){
                 return response.data;
             })
-            .then(function(data){
-                alert(data.message);
-                window.location = '/signin'; // 注册成功，回到首页
-            })
             .catch(function(err){
                 alert(err.response.data.error);
             })

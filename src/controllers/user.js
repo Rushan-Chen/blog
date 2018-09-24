@@ -126,3 +126,8 @@ export const activeAccount = function (req, res, next) {
       }
     });
   };
+
+export const signout = function (req, res, next) {
+    res.clearCookie(config.cookieName, { path: '/' });
+    res.end();
+}
