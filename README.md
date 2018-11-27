@@ -1,5 +1,20 @@
 # blog
 
+简介：含注册、登录功能，可查看，发表，修改，删除文章（增删改有权限限制）。
+
+- 注册、登录
+    - JWT 处理用户身份信息
+    - bcrypt 加密用户密码
+    - nodemailer 发送激活邮件
+- 文章增、删、改、查
+    - ejs 服务端渲染
+    - vue 客户端渲染
+    - marked、highlight 支持Markdown
+- 数据库 MongoDB
+  
+
+## 前期准备
+
 - Node.js v8.x
 - MongoDB
 
