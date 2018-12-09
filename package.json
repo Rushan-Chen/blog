@@ -1,6 +1,9 @@
 {
   "name": "blog",
-  "version": "0.0.0",
+  "version": "1.1.0",
+  "engines": {
+    "node": "8.x"
+  },
   "private": true,
   "scripts": {
     "dev": "nodemon ./src/bin/www --exec \"node -r dotenv/config -r babel-register\"",
@@ -23,7 +26,7 @@
     "marked": "^0.5.0",
     "moment": "^2.22.2",
     "mongoose": "^5.2.14",
-    "morgan": "~1.9.0",
+    "morgan": "^1.9.1",
     "nodemailer": "^4.6.8",
     "nodemailer-smtp-transport": "^2.7.4",
     "supervisor": "^0.12.0",
