@@ -2,17 +2,15 @@
 <% if(currentUser && post.authorId != null && currentUser._id.toString() === post.authorId.toString() ) {%>
 <!-- Split button -->
   <div class="btn-group pull-right">
-    <button type="button" class="btn btn-default">操作</button>
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="caret"></span>
-      <span class="sr-only">Toggle Dropdown</span>
+    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Action
     </button>
-    <ul class="dropdown-menu">
-      <li><a href="/posts/edit?id=<%= post._id %>">编辑</a></li>
-    </ul>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <a class="dropdown-item" href="/posts/edit?id=<%= post._id %>">Edit</a>
+    </div>
   </div>
   <% } %>
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-8 offset-md-2">
     <h1><%= post.title %></h1>  
     <div class="chinese-article"><%- post.mkContent %></div>
   </div>
