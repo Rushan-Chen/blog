@@ -12,6 +12,12 @@
   - marked、highlight 支持 Markdown
 - 数据库 MongoDB
 
+<video controls muted preload="auto">
+  <source src="src/public/vedios/blog-demo.mp4" type="video/mp4">
+  <source src="src/public/vedios/blog-demo.webm" type="video/webm">
+  <p>Your browser doesn't support HTML5 video. Here is a <a href="src/public/vedios/blog-demo.mp4">link to the video</a> instead.</p>
+</video>
+
 ## 前期准备
 
 - Node.js v8.x
