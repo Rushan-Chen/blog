@@ -1,17 +1,64 @@
-<div class="col-md-8">      
+<div id="app" class="col-md-8">      
   <% if(currentUser && post.authorId != null && currentUser._id.toString() === post.authorId.toString() ) {%>
   <!-- Split button -->
     <div class="btn-group pull-right">
       <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        操作
+        Action
       </button>
       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-        <a class="dropdown-item" href="/posts/edit?id=<%= post._id %>">编辑</a>   
+        <a class="dropdown-item" href="/posts/edit?id=<%= post._id %>">编辑</a>
+        <div class="dropdown-divider"></div>     
+        <!-- Button trigger modal -->
+        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#confirmModal">
+          删除
+        </button>
+      </div> <!-- End dropdown-menu -->
+    </div> <!-- End btn-group -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLongTitle">⚠️ 注意</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            真的要删除吗？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-warning" @click="deleteOne(<%= post._id %>)">删除</button>
+          </div>
+        </div>
       </div>
-    </div>
+    </div><!-- End Modal -->
   <% } %>
   <div class="container mb-5">
     <h2><%= post.title %></h2>  
     <div class="chinese-article"><%- post.mkContent %></div>
   </div>
 </div>
+<script>
+  Smile({
+    // methods: {
+    //   deleteOne(id) {
+    //     axios.delete ('/api/v1/posts/' + id)
+    //       .then(function (response) {
+    //         return response.data;
+    //       })
+    //       .then(function (data) {
+    //         window.location = '/posts';
+    //       })
+    //       .catch(function (err) {
+    //         alert(err.response.data.error);
+    //       })
+    //   }
+    // }
+  });
+</script>
+
+
+

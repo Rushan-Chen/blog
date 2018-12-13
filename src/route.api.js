@@ -20,6 +20,9 @@ router.post('/posts', auth.adminRequired, post.create);
 /* PATCH edit post. */
 router.patch('/posts/:id', auth.adminRequired, post.update);
 
+/* Delete one post*/
+router.delete('/posts/:id', auth.adminRequired, post.deleteOne);
+
 /* POST signup user. */
 router.post('/signup', user.signup);
 

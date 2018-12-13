@@ -1,4 +1,4 @@
-<div class="col-md-8">
+<div id="app" class="col-md-8">
     <h2>新建文章</h2>
     <form>
         <div class="form-group">
@@ -7,36 +7,35 @@
         <div class="form-group">
             <textarea class="form-control" rows="20" v-model="content" placeholder="请输入内容"></textarea>
         </div>
-        <div id="create" class="form-group">
-            <button class="btn btn-warning" v-on:click="submit">提交</button>
+        <div class="form-group">
+            <button class="btn btn-warning" @click="create">提交</button>
             <a class="btn btn-secondary" href="/posts">取消</a>
         </div>
     </form>
 </div>
 <script>
-    var vm = new Vue({
-        el: '#create',
-        data: {
-            title: '',
-            content: ''
-        },
-        methods: {
-            submit() {
-                axios.post('/api/v1/posts',
-                    {
-                        title: vm.title,
-                        content: vm.content
-                    })
-                    .then(function (response) {
-                        return response.data;
-                    })
-                    .then(function (data) {
-                        window.location = '/posts/show?id=' + data.post._id;
-                    })
-                    .catch(function (err) {
-                        alert(err.response.data.error);
-                    })
-            }
-        }
+    Smile({
+        // data: {
+        //     title: '',
+        //     content: ''
+        // },
+        // methods: {
+        //     create() {
+        //         axios.post('/api/v1/posts',
+        //             {
+        //                 title: vm.title,
+        //                 content: vm.content
+        //             })
+        //             .then(function (response) {
+        //                 return response.data;
+        //             })
+        //             .then(function (data) {
+        //                 window.location = '/posts/show?id=' + data.post._id;
+        //             })
+        //             .catch(function (err) {
+        //                 alert(err.response.data.error);
+        //             })
+        //     }
+        // }
     });
 </script>

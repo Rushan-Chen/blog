@@ -47,3 +47,14 @@ export const update = function(req, res, next) {
         })
         .catch(next);
 };
+
+export const deleteOne = function(req, res, next) {
+    const id = req.params.id;
+
+    PostModel.findOneAndDelete({ _id: id})
+        .exec()
+        .then(() => {
+            res.json({});
+        })
+        .catch(next);
+};

@@ -1,4 +1,4 @@
-<div class="col-md-5">
+<div id="app" class="col-md-5">
     <div class="card">
         <div class="card-header bg-dark text-white">登录</div>
         <div class="card-body">
@@ -8,36 +8,35 @@
             <div class="form-group">
                 <input type="password" class="form-control" v-model="pass" placeholder="密码">
             </div>
-            <button type="submit" class="btn btn-warning" v-on:click="submit">确定</button>
+            <button type="submit" class="btn btn-warning" @click="signin">确定</button>
         </div>
     </div>
 </div>
 <script>
 
-var vm = new Vue ({
-    el: '#app',
-    data: {
-        name: '',
-        pass: ''
-    },
-    methods: {
-        submit () {
-            axios.post('/api/v1/signin',
-            {
-                name: vm.name,
-                pass: vm.pass
-            })
-            .then(function(response){
-                // alert(response.data === ''); => true
-                return response.data;
-            })
-            .then(function(data){
-                window.location = '/';
-            })
-            .catch(function(err){
-                alert(err.response.data.error);
-            })
-        }
-    }
+Smile ({
+    // data: {
+    //     name: '',
+    //     pass: ''
+    // },
+    // methods: {
+    //     signin () {
+    //         axios.post('/api/v1/signin',
+    //         {
+    //             name: vm.name,
+    //             pass: vm.pass
+    //         })
+    //         .then(function(response){
+    //             // alert(response.data === ''); => true
+    //             return response.data;
+    //         })
+    //         .then(function(data){
+    //             window.location = '/';
+    //         })
+    //         .catch(function(err){
+    //             alert(err.response.data.error);
+    //         })
+    //     }
+    // }
 });
 </script>
