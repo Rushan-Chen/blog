@@ -4,7 +4,8 @@ export const more = function(req, res, next) {
     PostModel.find ({}, {})
         .exec()
         .then( posts => {
-            res.json({ postsList: posts });
+            let cpPosts = JSON.parse(JSON.stringify(posts));
+            res.json({ postsList: cpPosts.reverse() }); // 倒序posts list
         })
         .catch(next);
 };

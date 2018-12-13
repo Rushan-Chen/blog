@@ -12,11 +12,35 @@ hr {
   border-top: 1px solid rgba(255,255,255,.1);
 }
 
+img {
+  border-left: 2px dashed rgb(0, 150, 136, .5);
+  width: 90%;
+  margin-left: 10px;
+  padding-left: 10px;
+}
+
+/* add class for list */
 .list-side-gold {
   border-left-width: .25rem;
   border-left-color: #ffc107;
 }
 
+/* change list item hover */
+a.list-group-item:hover{
+  background:#fffcf2;
+  color: #694f00;
+}
+
+/* change dropdown-menu */
+.dropdown-menu {
+  min-width: 6rem;
+}
+
+.dropdown-menu .dropdown-item {
+  padding: 0px 12px;
+}
+
+/* add margin-bottom to navbar */
 nav .navbar .navbar-expand-lg{
   margin-bottom: 1.5rem;
 }
