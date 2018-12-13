@@ -6,7 +6,7 @@
   - JWT 处理用户身份信息
   - bcrypt 加密用户密码
   - nodemailer 发送激活邮件
-- 文章增、删、改、查
+- 文章CURD
   - ejs 服务端渲染
   - vue 客户端渲染
   - marked、highlight 支持 Markdown
