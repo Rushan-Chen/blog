@@ -25,10 +25,11 @@ img {
   border-left-color: #ffc107;
 }
 
-/* change list item hover */
+/* change list item */
 a.list-group-item:hover{
   background:#fffcf2;
   color: #694f00;
+  transform: scale(1.01);
 }
 
 /* change dropdown-menu */
